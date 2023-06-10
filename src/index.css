@@ -1,5 +1,41 @@
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  opacity: 50%;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888888; /* Color of the handle */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555555; /* Color of the handle on hover */
+}
+
+/* Display the scrollbar only when hovering over it */
+::-webkit-scrollbar-thumb:vertical {
+  height: 50px; /* Height of the handle */
+}
+
+/* Hide the scrollbar buttons */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+html {
+  overflow-y: scroll
+}
+
 body {
   margin: 0;
+  padding-right: 10px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -7,7 +43,238 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button, input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+nav {
+  height: 5rem;
+  border-bottom: 1px solid #000;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+nav .centering {
+  margin-left: 10rem;
+  margin-right: 10rem;
+  max-width: 80rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  font-size: 1.3rem;
+}
+
+nav a {
+  text-decoration: none;
+  color:#000;
+  margin-left: 2rem;
+}
+
+.active {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.home {
+  height: calc(100vh - 5rem);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 30rem;
+}
+
+.home .up {
+  width: 0; 
+  height: 0; 
+  padding: 0;
+  background: transparent;
+  border-right: 3rem solid transparent;
+  border-left: 3rem solid transparent;
+  border-top: transparent;
+  border-bottom: 2rem solid black;
+}
+
+.home .down {
+  width: 0; 
+  height: 0; 
+  padding: 0;
+  background: transparent;
+  border-right: 3rem solid transparent;
+  border-left: 3rem solid transparent;
+  border-bottom: transparent;
+  border-top: 2rem solid black;
+}
+
+.sorts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 22rem;
+}
+
+.wheel-element {
+  transition: 0.5s;
+  font-size: 1.7rem;
+  margin: 0.5rem;
+}
+
+.wheel0, .wheel6 {
+  opacity: 0;
+  font-size: 0rem;
+}
+
+.wheel3 {
+  font-size: 3rem;
+}
+
+.home a {
+  color: black;
+}
+
+.home .select {
+  font-size: 3rem;
+}
+
+.visual-array {
+  display: flex;
+  align-items: flex-end;
+  height: 20rem;
+}
+
+.bar-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bar {
+  background-color: #007bff;
+  margin: 4px;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  margin-top: 5rem;
+  flex-direction: column;
+  margin-bottom: 5rem;
+}
+
+.random {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+
+.custom {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.slider {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.random input,
+.custom input {
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease-in-out;
+}
+
+.random input {
+  width: 2.2ch;
+}
+
+.custom input {
+  width: 15rem;
+}
+
+.slider input {
+  width: 15rem;
+}
+
+.random input:focus,
+.custom input:focus,
+.slider input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+.page button {
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.page button:hover {
+  background-color: #ebebeb;
+}
+
+.page button:focus {
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+.btns {
+  margin-top: 1rem;
+}
+
+.btns button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 5rem; 
+}
+
+.highlight {
+  background-color: red;
+}
+
+.page code {
+  margin-top: 2rem;
+  background: #f7f7f7;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 40rem;
+  border-radius: 4px;
+}
+
+.confirmed {
+  background-color: green;
+}
+
+.highlighted-code {
+  background: lightblue;
 }
