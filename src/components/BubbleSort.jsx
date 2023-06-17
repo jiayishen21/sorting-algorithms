@@ -7,7 +7,7 @@ export const BubbleSort = () => {
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
 	const [speed, setSpeed] = useState(1);
-	const [waitTime, setWaitTime] = useState(8000)
+	const [waitTime, setWaitTime] = useState(5000)
 
 	const randomArray = (length) => {
 		const newArr = []
@@ -87,7 +87,7 @@ export const BubbleSort = () => {
 
 	const onStop = async () => {
 		setSorting(false)
-		// await delay(waitTime)
+		await delay(50)
 		setSwapped(false)
 		setComparingIndices([])
 		setConfirmedIndices([])
