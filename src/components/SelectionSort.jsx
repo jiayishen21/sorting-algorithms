@@ -87,7 +87,7 @@ export const SelectionSort = () => {
 
 	const onStop = async () => {
 		setSorting(false)
-		await delay(waitTime)
+		// await delay(waitTime)
 		setComparingIndices([])
 		setConfirmedIndices([])
 		setCodePosition(0)
@@ -99,11 +99,17 @@ export const SelectionSort = () => {
 	const [j, setJ] = useState(0)
 
 	const onClickSort = () => {
+		if(!sorting) {
 		setMinIndex(0)
-		setI(0)
-		setJ(1)
-		setSorting(true)
+			setI(0)
+			setJ(0)
+			setComparingIndices([])
+			setConfirmedIndices([])
+			setSorting(true)
+		}
 	}
+
+	const [swapping, setSwapping] = useState(false)
 
 	useEffect(() => {
 		(async () => {
@@ -116,16 +122,13 @@ export const SelectionSort = () => {
 				return;
 			}
 			if (j >= arr.length) {	
-				setCodePosition(3);
+				setCodePosition(2);
 				setComparingIndices([i, minIndex])
 				await delay(waitTime);
 				if (minIndex !== i) {
-					const newArr = [...arr];
-					const temp = newArr[i];
-					newArr[i] = newArr[minIndex];
-					newArr[minIndex] = temp;
-					setArr(newArr);
-					await delay(waitTime);
+					setSwapping(true)
+					await delay(waitTime)
+					setSwapping(false)
 				}
 	
 				const newConfirmedIndices = [...confirmedIndices];
@@ -147,6 +150,23 @@ export const SelectionSort = () => {
 			setJ(j + 1);
 		})();
 	}, [sorting, i, j]);
+
+	// Swap
+	useEffect(() => {
+		if(swapping && sorting && arr[i] > arr[minIndex]) {
+			setCodePosition(2)
+			const newArr = [...arr];
+			const temp = newArr[i];
+			newArr[i] = newArr[minIndex];
+			newArr[minIndex] = temp;
+			setArr(newArr);
+		}
+		else if(!sorting) {
+			setCodePosition(0)
+			setComparingIndices([])
+			setConfirmedIndices([])
+		}
+	}, [swapping, sorting])
 
 	return (
 		<>
@@ -180,27 +200,24 @@ export const SelectionSort = () => {
 				</div>
 
 				<code>
-					{`for(let i = 0; i < arr.length - 1; i ++) {`} <br/>
-					&nbsp;&nbsp;{`let sorted = true`}	<br/>
-					{`	`}	<br/>
-					&nbsp;&nbsp;{`for(let j = 0; j < arr.length - 1 - i; j ++) {`}	<br/>
+					{`for (let i = 0; i < arr.length - 1; i++) {`} <br/>
+					&nbsp;&nbsp;{`let minIndex = i`}	<br/>
+					<br/>
+					&nbsp;&nbsp;{`for (let j = i + 1; j < arr.length; j++) {`}	<br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`if(arr[j] > arr[j + 1]) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if (arr[j] < arr[minIndex]) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`minIndex = j`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
 					</div>
+					<br />
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`sorted = false`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`const temp = arr[j]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j] = arr[j + 1]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j + 1] = temp`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if (minIndex !== i) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`let temp = arr[i];`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[i] = arr[minIndex];`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[minIndex] = temp`}	<br/>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
 					&nbsp;&nbsp;{`}`}	<br/>
-					{`	`}	<br/>
-					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`if(sorted) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`break`}	<br/>
-						&nbsp;&nbsp;{`}`}	<br/>
-					</div>
 					{`}`}
 				</code>
 

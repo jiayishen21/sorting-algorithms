@@ -87,7 +87,7 @@ export const BubbleSort = () => {
 
 	const onStop = async () => {
 		setSorting(false)
-		await delay(waitTime)
+		// await delay(waitTime)
 		setSwapped(false)
 		setComparingIndices([])
 		setConfirmedIndices([])
@@ -100,11 +100,17 @@ export const BubbleSort = () => {
 	const [swapped, setSwapped] = useState(false)
 
 	const onClickSort = () => {
-		setI(0)
-		setJ(0)
-		setSwapped(false)
-		setSorting(true)
+		if(!sorting) {
+			setI(0)
+			setJ(0)
+			setSwapped(false)
+			setComparingIndices([])
+			setConfirmedIndices([])
+			setSorting(true)
+		}
 	}
+
+	const [swapping, setSwapping] = useState(false)
 
 	useEffect(() => {
 		(async() => {
@@ -118,7 +124,6 @@ export const BubbleSort = () => {
 			}
 			if(j >= arr.length - 1 - i) {
 				setCodePosition(3)
-				await delay(2*waitTime)
 				if(!swapped) {
 					await onStop()
 					toast.success('Array sorted.')
@@ -130,25 +135,40 @@ export const BubbleSort = () => {
 				setI(i + 1)
 				setJ(0)
 				setSwapped(false)
+				await delay(2*waitTime)
 				return
 			}
 			setCodePosition(1)
 			setComparingIndices([j, j + 1]);
 			await delay(waitTime);
 
-			const newArr = [...arr]
-			if (newArr[j] > newArr[j + 1]) {
-				setCodePosition(2)
+			if (arr[j] > arr[j + 1]) {
 				setSwapped(true)
-				const temp = newArr[j];
-				newArr[j] = newArr[j + 1];
-				newArr[j + 1] = temp;
-				setArr([...newArr]);
+				setSwapping(true)
 				await delay(waitTime);
+				setSwapping(false)
 			}
 			setJ(j + 1)
 		}) ()
 	}, [sorting, i, j])
+
+	// Swap
+	useEffect(() => {
+		if(swapping && sorting && arr[j] > arr[j + 1]) {
+			setCodePosition(2)
+			const newArr = [...arr]
+			const temp = newArr[j];
+			newArr[j] = newArr[j + 1];
+			newArr[j + 1] = temp;
+			setArr([...newArr]);
+		}
+		else if(!sorting) {
+			setCodePosition(0)
+			setSwapped(false)
+			setComparingIndices([])
+			setConfirmedIndices([])
+		}
+	}, [swapping, sorting])
 
 	return (
 		<>
@@ -184,7 +204,7 @@ export const BubbleSort = () => {
 				<code>
 					{`for(let i = 0; i < arr.length - 1; i ++) {`} <br/>
 					&nbsp;&nbsp;{`let sorted = true`}	<br/>
-					{`	`}	<br/>
+					<br/>
 					&nbsp;&nbsp;{`for(let j = 0; j < arr.length - 1 - i; j ++) {`}	<br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`if(arr[j] > arr[j + 1]) {`}	<br/>
