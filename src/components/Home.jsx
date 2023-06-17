@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
 	const [sorts, setSorts] = useState(['Random Quick Sort', 'Counting Sort', 'Radix Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort', 'Quick Sort'])
 	const [activeSorts, setActiveSorts] = useState(['Random Quick Sort', 'Counting Sort', 'Radix Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort'])
 
+	//v1
 	const changeRange = (change) => {
 		let newSorts = sorts
 		if(change === 1) {
@@ -20,6 +21,29 @@ export const Home = () => {
 		setSorts(newSorts)
 		setActiveSorts(sorts.slice(0, 7))
 	}
+
+	//v2
+	/*
+	const changeRange = useCallback((change) => {
+		setSorts((prevSorts) => {
+			let newSorts = [...prevSorts]; // Create a new array to avoid modifying the original array directly
+	
+			if (change === 1) {
+				const moved = newSorts.shift();
+				newSorts.push(moved);
+			} else if (change === -1) {
+				const moved = newSorts.pop();
+				newSorts.unshift(moved);
+			}
+	
+			return newSorts;
+		});
+	}, [])
+
+	useEffect(() => {
+		setActiveSorts(sorts.slice(0, 7))
+	}, [sorts])
+	*/
 
 	const [redirect, setRedirect] = useState(false)
 
@@ -43,9 +67,14 @@ export const Home = () => {
     }
   }, [])
 
-	if(redirect) {
-		return <Navigate replace to={`/${activeSorts[3].toLowerCase().replace(/\s/g, '-')}`} />;
-	}
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if(redirect) {
+			const targetPage = `/${activeSorts[3].toLowerCase().replace(/\s/g, '-')}`
+			navigate(targetPage)
+		}
+	})
 
 	return (
 		<>

@@ -9,7 +9,7 @@ export const Nav = () => {
 						<NavLink className='home-link' to='/'>MENU</NavLink>
 					</div>
 					<div>
-						<NavLink activeClass='active' to='/bubble-sort'>BUB</NavLink>
+						<NavLink to='/bubble-sort'>BUB</NavLink>
 						<NavLink to='/selection-sort'>SEL</NavLink>
 						<NavLink to='/insertion-sort'>INS</NavLink>
 						<NavLink to='/merge-sort'>MER</NavLink>

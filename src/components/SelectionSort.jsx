@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { VisualArray } from './VisualArray';
 import { toast } from 'react-toastify';
 
-export const BubbleSort = () => {
+export const SelectionSort = () => {
 	const [arr, setArr] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
@@ -63,10 +63,10 @@ export const BubbleSort = () => {
 		setArr(newCustom)
 	}
 
-	const handleSliderChange = (event) => {
-		const value = parseInt(event.target.value, 10);
-		setSpeed(value);
-	}
+  const handleSliderChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    setSpeed(value);
+  };
 
 	useEffect(() => {
 		setArr(randomArray(10))
@@ -88,67 +88,65 @@ export const BubbleSort = () => {
 	const onStop = async () => {
 		setSorting(false)
 		await delay(waitTime)
-		setSwapped(false)
 		setComparingIndices([])
 		setConfirmedIndices([])
 		setCodePosition(0)
 	}
 
 	// v4
+	const [minIndex, setMinIndex] = useState(0)
 	const [i, setI] = useState(0)
 	const [j, setJ] = useState(0)
-	const [swapped, setSwapped] = useState(false)
 
 	const onClickSort = () => {
+		setMinIndex(0)
 		setI(0)
-		setJ(0)
-		setSwapped(false)
+		setJ(1)
 		setSorting(true)
 	}
 
 	useEffect(() => {
-		(async() => {
-			if(!sorting) {
-				return
+		(async () => {
+			if (!sorting) {
+				return;
 			}
-			if(i >= arr.length - 1) {
-				await onStop()
-				toast.success('Array sorted.')
-				return
+			if (i >= arr.length - 1) {
+				await onStop();
+				toast.success('Array sorted.');
+				return;
 			}
-			if(j >= arr.length - 1 - i) {
-				setCodePosition(3)
-				await delay(2*waitTime)
-				if(!swapped) {
-					await onStop()
-					toast.success('Array sorted.')
-					return
-				}
-				const newConfirmedIndices = [...confirmedIndices]
-				newConfirmedIndices.push(j)
-				setConfirmedIndices(newConfirmedIndices)
-				setI(i + 1)
-				setJ(0)
-				setSwapped(false)
-				return
-			}
-			setCodePosition(1)
-			setComparingIndices([j, j + 1]);
-			await delay(waitTime);
-
-			const newArr = [...arr]
-			if (newArr[j] > newArr[j + 1]) {
-				setCodePosition(2)
-				setSwapped(true)
-				const temp = newArr[j];
-				newArr[j] = newArr[j + 1];
-				newArr[j + 1] = temp;
-				setArr([...newArr]);
+			if (j >= arr.length) {	
+				setCodePosition(3);
+				setComparingIndices([i, minIndex])
 				await delay(waitTime);
+				if (minIndex !== i) {
+					const newArr = [...arr];
+					const temp = newArr[i];
+					newArr[i] = newArr[minIndex];
+					newArr[minIndex] = temp;
+					setArr(newArr);
+					await delay(waitTime);
+				}
+	
+				const newConfirmedIndices = [...confirmedIndices];
+				newConfirmedIndices.push(i);
+				setConfirmedIndices(newConfirmedIndices);
+				setMinIndex(i + 1);
+				setJ(i + 2);
+				setI(i + 1);
+				return;
 			}
-			setJ(j + 1)
-		}) ()
-	}, [sorting, i, j])
+	
+			setCodePosition(1);
+			setComparingIndices([j, minIndex]);
+			await delay(waitTime);
+	
+			if (arr[j] < arr[minIndex]) {
+				setMinIndex(j);
+			}
+			setJ(j + 1);
+		})();
+	}, [sorting, i, j]);
 
 	return (
 		<>
