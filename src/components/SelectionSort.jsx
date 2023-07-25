@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { VisualArray } from './VisualArray';
 import { toast } from 'react-toastify';
 
-export const OldInsertionSort = () => {
+export const OldSelectionSort = () => {
 	const baseWaitTime = 500
 	const [arr, setArr] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
