@@ -120,8 +120,8 @@ export const BubbleSort = () => {
 		}
 	}
 
+	const [comparing, setComparing] = useState(false)
 	const [swapping, setSwapping] = useState(false)
-	const [swapping2, setSwapping2] = useState(false)
 
 	useEffect(() => {
 		(async() => {
@@ -133,14 +133,16 @@ export const BubbleSort = () => {
 				decreaseTimer()
 				return
 			}
-			if(swapping) {
-				setSwapping(false)
-				setSwapping2(true)
-				setTimer(waitTime)
+			if(comparing) {
+				setComparing(false)
+				if (arr[j] > arr[j + 1]) {
+					setSwapped(true)
+					setSwapping(true)
+					setTimer(waitTime)
+					return
+				}
+				setJ(j + 1)
 				return
-			}
-			if(swapping2) {
-				setSwapping2(false)
 			}
 
 			if(i >= arr.length - 1) {
@@ -166,28 +168,22 @@ export const BubbleSort = () => {
 			}
 			setCodePosition(1)
 			setComparingIndices([j, j + 1]);
+			setComparing(true)
 			setTimer(waitTime)
-	
-			if (arr[j] > arr[j + 1]) {
-				setSwapped(true)
-				setTimer(waitTime)
-				setSwapping(true)
-				return
-			}
-			
-			setJ(j + 1)
+
 		}) ()
 	}, [sorting, i, j, timer])
 
 	// Swap
 	useEffect(() => {
-		if(swapping2 && sorting && arr[j] > arr[j + 1]) {
+		if(swapping && sorting && arr[j] > arr[j + 1]) {
 			setCodePosition(2)
 			const newArr = [...arr]
 			const temp = newArr[j];
 			newArr[j] = newArr[j + 1];
 			newArr[j + 1] = temp;
 			setArr([...newArr]);
+			setSwapping(false)
 		}
 		else if(!sorting) {
 			setCodePosition(0)
@@ -195,7 +191,10 @@ export const BubbleSort = () => {
 			setComparingIndices([])
 			setConfirmedIndices([])
 		}
-	}, [swapping2, sorting, timer])
+		else if(swapping) {
+			setSwapping(false)
+		}
+	}, [swapping, sorting])
 
 	return (
 		<>
