@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react'
 import { VisualArray } from './VisualArray';
 import { toast } from 'react-toastify';
 
-export const OldInsertionSort = () => {
-	const baseWaitTime = 500
+export const SelectionSort = () => {
 	const [arr, setArr] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
 	const [speed, setSpeed] = useState(1);
-	const [waitTime, setWaitTime] = useState(baseWaitTime)
+	const [waitTime, setWaitTime] = useState(5000)
 
 	const randomArray = (length) => {
 		const newArr = []
@@ -64,27 +63,18 @@ export const OldInsertionSort = () => {
 		setArr(newCustom)
 	}
 
-	const handleSliderChange = (event) => {
-		const value = parseInt(event.target.value, 10);
-		setSpeed(value);
-	}
+  const handleSliderChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    setSpeed(value);
+  };
 
 	useEffect(() => {
 		setArr(randomArray(10))
 	}, [])
 
 	useEffect(() => {
-		setWaitTime(baseWaitTime/speed)
+		setWaitTime(800/speed)
 	}, [speed])
-
-	const decreaseTimer = async() => {
-		if(timer > 0) {
-			await delay(10)
-			setTimer(timer - 10)
-		}
-	}
-
-	const [timer, setTimer] = useState(0)
 
 	const [comparingIndices, setComparingIndices] = useState([]);
 	const [confirmedIndices, setConfirmedIndices] = useState([]);
@@ -97,23 +87,22 @@ export const OldInsertionSort = () => {
 
 	const onStop = async () => {
 		setSorting(false)
-		await delay(50)
-		setSwapped(false)
+		await delay(150)
 		setComparingIndices([])
 		setConfirmedIndices([])
 		setCodePosition(0)
 	}
 
 	// v4
+	const [minIndex, setMinIndex] = useState(0)
 	const [i, setI] = useState(0)
 	const [j, setJ] = useState(0)
-	const [swapped, setSwapped] = useState(false)
 
 	const onClickSort = () => {
 		if(!sorting) {
+		setMinIndex(0)
 			setI(0)
 			setJ(0)
-			setSwapped(false)
 			setComparingIndices([])
 			setConfirmedIndices([])
 			setSorting(true)
@@ -121,81 +110,63 @@ export const OldInsertionSort = () => {
 	}
 
 	const [swapping, setSwapping] = useState(false)
-	const [swapping2, setSwapping2] = useState(false)
 
 	useEffect(() => {
-		(async() => {
-			if(!sorting) {
-				setTimer(0)
-				return
+		(async () => {
+			if (!sorting) {
+				return;
 			}
-			if(timer > 0) {
-				decreaseTimer()
-				return
+			if (i >= arr.length - 1) {
+				await onStop();
+				toast.success('Array sorted.');
+				return;
 			}
-			if(swapping) {
-				setSwapping(false)
-				setSwapping2(true)
-				setTimer(waitTime)
-				return
-			}
-			if(swapping2) {
-				setSwapping2(false)
-			}
-
-			if(i >= arr.length - 1) {
-				await onStop()
-				toast.success('Array sorted.')
-				return
-			}
-			if(j >= arr.length - 1 - i) {
-				setCodePosition(3)
-				if(!swapped) {
-					await onStop()
-					toast.success('Array sorted.')
-					return
+			if (j >= arr.length) {	
+				setCodePosition(2);
+				setComparingIndices([i, minIndex])
+				await delay(waitTime);
+				if (minIndex !== i) {
+					setSwapping(true)
+					await delay(waitTime)
+					setSwapping(false)
 				}
-				const newConfirmedIndices = [...confirmedIndices]
-				newConfirmedIndices.push(j)
-				setConfirmedIndices(newConfirmedIndices)
-				setI(i + 1)
-				setJ(0)
-				setSwapped(false)
-				setTimer(2*waitTime)
-				return
-			}
-			setCodePosition(1)
-			setComparingIndices([j, j + 1]);
-			setTimer(waitTime)
 	
-			if (arr[j] > arr[j + 1]) {
-				setSwapped(true)
-				setTimer(waitTime)
-				setSwapping(true)
-				return
+				const newConfirmedIndices = [...confirmedIndices];
+				newConfirmedIndices.push(i);
+				setConfirmedIndices(newConfirmedIndices);
+				setMinIndex(i + 1);
+				setJ(i + 2);
+				setI(i + 1);
+				return;
 			}
-			
-			setJ(j + 1)
-		}) ()
-	}, [sorting, i, j, timer])
+	
+			setCodePosition(1);
+			setComparingIndices([j, minIndex]);
+			await delay(waitTime);
+	
+			if (arr[j] < arr[minIndex]) {
+				setMinIndex(j);
+			}
+			setJ(j + 1);
+		})();
+	}, [sorting, i, j]);
 
 	// Swap
 	useEffect(() => {
-		if(swapping2 && sorting && arr[j] > arr[j + 1]) {
+		if(swapping && sorting && arr[i] > arr[minIndex]) {
 			setCodePosition(2)
-			const newArr = [...arr]
-			const temp = newArr[j];
-			newArr[j] = newArr[j + 1];
-			newArr[j + 1] = temp;
-			setArr([...newArr]);
+			const newArr = [...arr];
+			const temp = newArr[i];
+			newArr[i] = newArr[minIndex];
+			newArr[minIndex] = temp;
+			setArr(newArr);
 		}
 		else if(!sorting) {
 			setCodePosition(0)
-			setSwapped(false)
 			setComparingIndices([])
 			setConfirmedIndices([])
 		}
-	}, [swapping2, sorting, timer])
+	}, [swapping, sorting])
 
 	return (
 		<>
@@ -229,27 +200,24 @@ export const OldInsertionSort = () => {
 				</div>
 
 				<code>
-					{`for(let i = 0; i < arr.length - 1; i ++) {`} <br/>
-					&nbsp;&nbsp;{`let sorted = true`}	<br/>
+					{`for (let i = 0; i < arr.length - 1; i++) {`} <br/>
+					&nbsp;&nbsp;{`let minIndex = i`}	<br/>
 					<br/>
-					&nbsp;&nbsp;{`for(let j = 0; j < arr.length - 1 - i; j ++) {`}	<br/>
+					&nbsp;&nbsp;{`for (let j = i + 1; j < arr.length; j++) {`}	<br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`if(arr[j] > arr[j + 1]) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if (arr[j] < arr[minIndex]) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`minIndex = j`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
 					</div>
+					<br />
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`sorted = false`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`const temp = arr[j]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j] = arr[j + 1]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j + 1] = temp`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if (minIndex !== i) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`let temp = arr[i];`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[i] = arr[minIndex];`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[minIndex] = temp`}	<br/>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
 					&nbsp;&nbsp;{`}`}	<br/>
-					{`	`}	<br/>
-					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`if(sorted) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`break`}	<br/>
-						&nbsp;&nbsp;{`}`}	<br/>
-					</div>
 					{`}`}
 				</code>
 

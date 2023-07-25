@@ -3,11 +3,12 @@ import { VisualArray } from './VisualArray';
 import { toast } from 'react-toastify';
 
 export const BubbleSort = () => {
+	const baseWaitTime = 500
 	const [arr, setArr] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
 	const [speed, setSpeed] = useState(1);
-	const [waitTime, setWaitTime] = useState(5000)
+	const [waitTime, setWaitTime] = useState(baseWaitTime)
 
 	const randomArray = (length) => {
 		const newArr = []
@@ -73,8 +74,17 @@ export const BubbleSort = () => {
 	}, [])
 
 	useEffect(() => {
-		setWaitTime(800/speed)
+		setWaitTime(baseWaitTime/speed)
 	}, [speed])
+
+	const decreaseTimer = async() => {
+		if(timer > 0) {
+			await delay(10)
+			setTimer(timer - 10)
+		}
+	}
+
+	const [timer, setTimer] = useState(0)
 
 	const [comparingIndices, setComparingIndices] = useState([]);
 	const [confirmedIndices, setConfirmedIndices] = useState([]);
@@ -111,12 +121,28 @@ export const BubbleSort = () => {
 	}
 
 	const [swapping, setSwapping] = useState(false)
+	const [swapping2, setSwapping2] = useState(false)
 
 	useEffect(() => {
 		(async() => {
 			if(!sorting) {
+				setTimer(0)
 				return
 			}
+			if(timer > 0) {
+				decreaseTimer()
+				return
+			}
+			if(swapping) {
+				setSwapping(false)
+				setSwapping2(true)
+				setTimer(waitTime)
+				return
+			}
+			if(swapping2) {
+				setSwapping2(false)
+			}
+
 			if(i >= arr.length - 1) {
 				await onStop()
 				toast.success('Array sorted.')
@@ -135,26 +161,27 @@ export const BubbleSort = () => {
 				setI(i + 1)
 				setJ(0)
 				setSwapped(false)
-				await delay(2*waitTime)
+				setTimer(2*waitTime)
 				return
 			}
 			setCodePosition(1)
 			setComparingIndices([j, j + 1]);
-			await delay(waitTime);
-
+			setTimer(waitTime)
+	
 			if (arr[j] > arr[j + 1]) {
 				setSwapped(true)
+				setTimer(waitTime)
 				setSwapping(true)
-				await delay(waitTime);
-				setSwapping(false)
+				return
 			}
+			
 			setJ(j + 1)
 		}) ()
-	}, [sorting, i, j])
+	}, [sorting, i, j, timer])
 
 	// Swap
 	useEffect(() => {
-		if(swapping && sorting && arr[j] > arr[j + 1]) {
+		if(swapping2 && sorting && arr[j] > arr[j + 1]) {
 			setCodePosition(2)
 			const newArr = [...arr]
 			const temp = newArr[j];
@@ -168,7 +195,7 @@ export const BubbleSort = () => {
 			setComparingIndices([])
 			setConfirmedIndices([])
 		}
-	}, [swapping, sorting])
+	}, [swapping2, sorting, timer])
 
 	return (
 		<>
