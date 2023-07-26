@@ -4,8 +4,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-	const [sorts, setSorts] = useState(['Random Quick Sort', 'Counting Sort', 'Radix Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort', 'Quick Sort'])
-	const [activeSorts, setActiveSorts] = useState(['Random Quick Sort', 'Counting Sort', 'Radix Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort'])
+	const [sorts, setSorts] = useState(['Quick Sort', 'Random Quick Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort', ])
+	const [activeSorts, setActiveSorts] = useState(['Quick', 'Random Quick Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort'])
 
 	//v1
 	const changeRange = (change) => {
@@ -19,7 +19,7 @@ export const Home = () => {
 			newSorts.unshift(moved)
 		}
 		setSorts(newSorts)
-		setActiveSorts(sorts.slice(0, 7))
+		setActiveSorts(sorts.slice(0, 5))
 	}
 
 	//v2
@@ -71,7 +71,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		if(redirect) {
-			const targetPage = `/${activeSorts[3].toLowerCase().replace(/\s/g, '-')}`
+			const targetPage = `/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`
 			navigate(targetPage)
 		}
 	})
@@ -96,7 +96,7 @@ export const Home = () => {
 					</button>
 				</div>
 
-				<Link to={`/${activeSorts[3].toLowerCase().replace(/\s/g, '-')}`} className='select'>
+				<Link to={`/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`} className='select'>
 					<FontAwesomeIcon icon={faArrowRight} />
 				</Link>
 			</div>

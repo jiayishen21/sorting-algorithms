@@ -128,7 +128,7 @@ nav a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 22rem;
+  height: 16rem;
 }
 
 .wheel-element {
@@ -137,14 +137,25 @@ nav a {
   margin: 0.5rem;
 }
 
-.wheel0, .wheel6 {
+.wheel0, .wheel4 {
   opacity: 0;
   font-size: 0rem;
 }
 
-.wheel3 {
+.wheel2 {
   font-size: 3rem;
 }
+
+/*
+.wheel0, .wheel4 {
+  opacity: 0;
+  font-size: 0rem;
+}
+
+.wheel2 {
+  font-size: 3rem;
+}
+*/
 
 .home a {
   color: black;

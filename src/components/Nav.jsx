@@ -15,8 +15,6 @@ export const Nav = () => {
 						<NavLink to='/merge-sort'>MER</NavLink>
 						<NavLink to='/quick-sort'>QUI</NavLink>
 						<NavLink to='/random-quick-sort'>RAN</NavLink>
-						<NavLink to='/counting-sort'>COU</NavLink>
-						<NavLink to='/radix-sort'>RAD</NavLink>
 					</div>
 
 				</div>

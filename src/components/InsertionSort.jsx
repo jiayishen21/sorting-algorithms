@@ -32,11 +32,11 @@ export const InsertionSort = () => {
 	const onClickGenerate = async() => {
 		const number = parseInt(randomLength)
 		if(isNaN(number) || number < 3) {
-			toast.error('Length must be at least 3.')
+			toast.error('Array length must be at least 3.')
 			return
 		}
 		if(number > 25) {
-			toast.error('Length must be 25 or lower.')
+			toast.error('Array length must be 25 or lower.')
 			return
 		}
 		await onStop()
@@ -46,17 +46,21 @@ export const InsertionSort = () => {
 
 	const onClickCustom = async() => {
 		const values = custom.split(",").map((item) => item.trim());	
-		if(!values.every((value) => /^[0-9]+$/.test(value))) {
-			toast.error('Invalid input format. It should be comma seperated numbers like "1, 2, 3, 4".')
+		const newCustom = values.map((value) => Number(value));
+		if(!newCustom.every((value) => Number.isInteger(value))) {
+			toast.error('Invalid input array. Must only input positive integers for display purposes.')
 			return
 		}
-		const newCustom = values.map((value) => Number(value));
+		if(!newCustom.every((value) => value > 0)) {
+			toast.error('Invalid input array. Must only input positive integers for display purposes.')
+			return
+		}
 		if(newCustom.length < 3) {
-			toast.error('Length must be at least 3.')
+			toast.error('Array length must be at least 3.')
 			return
 		}
 		if(newCustom.length > 25) {
-			toast.error('Length must be 25 or lower.')
+			toast.error('Array length must be 25 or lower.')
 			return
 		}
 		await onStop()
