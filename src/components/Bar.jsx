@@ -1,6 +1,6 @@
 
 
-export const Bar = ({number, max, length, highlight, confirmed}) => {
+export const Bar = ({number, max, length, highlight, confirmed, currentElement}) => {
 	const height = 20*number/max
 	const width = 40/length
 
@@ -8,7 +8,10 @@ export const Bar = ({number, max, length, highlight, confirmed}) => {
 		<>
 			<div className='bar-wrapper'>
 				<span
-					className={`bar ${highlight ? 'highlight' : confirmed ? 'confirmed' : ''}`}
+					className={
+						`bar ${highlight ? 'highlight' :
+						confirmed ? 'confirmed' :
+						currentElement ? 'currentElement' : ''}`}
 					style={{
 						height: `${height}rem`,
 						width: `${width}rem`,
@@ -17,7 +20,7 @@ export const Bar = ({number, max, length, highlight, confirmed}) => {
 				</span>
 
 				<div>
-					{number}
+					{currentElement ? `Selected: ${number}`: number}
 				</div>
 			</div>
 		</>

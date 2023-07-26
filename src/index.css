@@ -260,6 +260,10 @@ nav a {
   background-color: red;
 }
 
+.currentElement {
+  background-color: yellow;
+}
+
 .page code {
   margin-top: 2rem;
   background: #f7f7f7;

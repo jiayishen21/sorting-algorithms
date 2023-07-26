@@ -108,20 +108,21 @@ export const BubbleSort = () => {
 	const [i, setI] = useState(0)
 	const [j, setJ] = useState(0)
 	const [swapped, setSwapped] = useState(false)
+	const [comparing, setComparing] = useState(false)
+	const [swapping, setSwapping] = useState(false)
 
 	const onClickSort = () => {
 		if(!sorting) {
 			setI(0)
 			setJ(0)
 			setSwapped(false)
+			setComparing(false)
+			setSwapping(false)
 			setComparingIndices([])
 			setConfirmedIndices([])
 			setSorting(true)
 		}
 	}
-
-	const [comparing, setComparing] = useState(false)
-	const [swapping, setSwapping] = useState(false)
 
 	useEffect(() => {
 		(async() => {
