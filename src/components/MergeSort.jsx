@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { VisualArray } from './VisualArray';
 import { toast } from 'react-toastify';
 
-export const BubbleSort = () => {
+export const MergeSort = () => {
 	const baseWaitTime = 500
 	const [arr, setArr] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
@@ -170,7 +170,7 @@ export const BubbleSort = () => {
 				setI(i + 1)
 				setJ(0)
 				setSwapped(false)
-				setTimer(waitTime)
+				setTimer(2*waitTime)
 				return
 			}
 			setCodePosition(1)

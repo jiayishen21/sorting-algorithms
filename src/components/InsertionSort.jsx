@@ -20,7 +20,9 @@ export const InsertionSort = () => {
 	}
 
 	const handleRandomLengthChange = (event) => {
-		if(event.target.value.length < 3) {
+		if(event.target.value.length < 3 &&
+      event.target.value[1] !== '.' &&
+      event.target.value[0] !== '-') {
 			setRandomLength(event.target.value)
 		}
   }
