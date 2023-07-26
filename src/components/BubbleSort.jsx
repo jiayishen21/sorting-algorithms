@@ -104,6 +104,7 @@ export const BubbleSort = () => {
 	const onStop = async () => {
 		setSorting(false)
 		await delay(50)
+		setTimer(0)
 		setSwapped(false)
 		setComparingIndices([])
 		setConfirmedIndices([])
@@ -119,6 +120,7 @@ export const BubbleSort = () => {
 
 	const onClickSort = () => {
 		if(!sorting) {
+			setTimer(0)
 			setI(0)
 			setJ(0)
 			setSwapped(false)

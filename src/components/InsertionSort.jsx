@@ -105,6 +105,7 @@ export const InsertionSort = () => {
 	const onStop = async () => {
 		setSorting(false)
 		await delay(50)
+		setTimer(0)
 		setI(0)
 		setJ(0)
 		setCurrentElement(undefined)
@@ -124,6 +125,7 @@ export const InsertionSort = () => {
 		if(!sorting) {
 			setI(1)
 			setJ(0)
+			setTimer(0)
 			setCurrentElement(undefined)
 			setChangeCurrent(false)
 			setSwapping(false)
@@ -138,6 +140,7 @@ export const InsertionSort = () => {
 	useEffect(() => {
 		(async () => {
 			if (!sorting) {
+				setTimer(0)
 				return
 			}
 			if(timer > 0) {

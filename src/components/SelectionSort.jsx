@@ -104,6 +104,7 @@ export const SelectionSort = () => {
 	const onStop = async () => {
 		setSorting(false)
 		await delay(50)
+		setTimer(0)
 		setComparingIndices([])
 		setConfirmedIndices([])
 		setCodePosition(0)
@@ -119,6 +120,7 @@ export const SelectionSort = () => {
 
 	const onClickSort = () => {
 		if(!sorting) {
+			setTimer(0)
 			setMinIndex(0)
 			setI(0)
 			setJ(0)
@@ -134,6 +136,7 @@ export const SelectionSort = () => {
 	useEffect(() => {
 		(async () => {
 			if (!sorting) {
+				setTimer(0)
 				return;
 			}
 			if(timer > 0) {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { VisualArray } from './VisualArray';
+import { MergeSortVisualArray } from './MergeSortVisualArray';
 import { toast } from 'react-toastify';
 
 export const MergeSort = () => {
 	const baseWaitTime = 500
-	const [arr, setArr] = useState([1, 2, 3, 4])
+	const [arrs, setArrs] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
 	const [speed, setSpeed] = useState(1);
@@ -43,7 +43,7 @@ export const MergeSort = () => {
 		}
 		await onStop()
 		document.activeElement.blur()
-		setArr(randomArray(number))
+		setArrs(randomArray(number))
 	}
 
 	const onClickCustom = async() => {
@@ -67,7 +67,7 @@ export const MergeSort = () => {
 		}
 		await onStop()
 		document.activeElement.blur()
-		setArr(newCustom)
+		setArrs(newCustom)
 	}
 
 	const handleSliderChange = (event) => {
@@ -76,7 +76,7 @@ export const MergeSort = () => {
 	}
 
 	useEffect(() => {
-		setArr(randomArray(10))
+		setArrs(randomArray(10))
 	}, [])
 
 	useEffect(() => {
@@ -92,8 +92,6 @@ export const MergeSort = () => {
 
 	const [timer, setTimer] = useState(0)
 
-	const [comparingIndices, setComparingIndices] = useState([]);
-	const [confirmedIndices, setConfirmedIndices] = useState([]);
 	const [sorting, setSorting] = useState(false)
 	const [codePosition, setCodePosition] = useState(0)
 
@@ -104,28 +102,13 @@ export const MergeSort = () => {
 	const onStop = async () => {
 		setSorting(false)
 		await delay(50)
-		setSwapped(false)
-		setComparingIndices([])
-		setConfirmedIndices([])
 		setCodePosition(0)
+    setTimer(0)
 	}
-
-	// v4
-	const [i, setI] = useState(0)
-	const [j, setJ] = useState(0)
-	const [swapped, setSwapped] = useState(false)
-	const [comparing, setComparing] = useState(false)
-	const [swapping, setSwapping] = useState(false)
 
 	const onClickSort = () => {
 		if(!sorting) {
-			setI(0)
-			setJ(0)
-			setSwapped(false)
-			setComparing(false)
-			setSwapping(false)
-			setComparingIndices([])
-			setConfirmedIndices([])
+      setTimer(0)
 			setSorting(true)
 		}
 	}
@@ -140,73 +123,16 @@ export const MergeSort = () => {
 				decreaseTimer()
 				return
 			}
-			if(comparing) {
-				setComparing(false)
-				if (arr[j] > arr[j + 1]) {
-					setSwapped(true)
-					setSwapping(true)
-					setTimer(waitTime)
-					return
-				}
-				setJ(j + 1)
-				return
-			}
-
-			if(i >= arr.length - 1) {
-				await onStop()
-				toast.success('Array sorted.')
-				return
-			}
-			if(j >= arr.length - 1 - i) {
-				setCodePosition(3)
-				if(!swapped) {
-					await onStop()
-					toast.success('Array sorted.')
-					return
-				}
-				const newConfirmedIndices = [...confirmedIndices]
-				newConfirmedIndices.push(j)
-				setConfirmedIndices(newConfirmedIndices)
-				setI(i + 1)
-				setJ(0)
-				setSwapped(false)
-				setTimer(2*waitTime)
-				return
-			}
-			setCodePosition(1)
-			setComparingIndices([j, j + 1]);
-			setComparing(true)
-			setTimer(waitTime)
 
 		}) ()
-	}, [sorting, i, j, timer])
-
-	// Swap
-	useEffect(() => {
-		if(swapping && sorting && arr[j] > arr[j + 1]) {
-			setCodePosition(2)
-			const newArr = [...arr]
-			const temp = newArr[j];
-			newArr[j] = newArr[j + 1];
-			newArr[j + 1] = temp;
-			setArr([...newArr]);
-			setSwapping(false)
-		}
-		else if(!sorting) {
-			setCodePosition(0)
-			setSwapped(false)
-			setComparingIndices([])
-			setConfirmedIndices([])
-		}
-		else if(swapping) {
-			setSwapping(false)
-		}
-	}, [swapping, sorting])
+	}, [sorting, timer])
 
 	return (
 		<>
 			<div className='page'>
-				<VisualArray arr={arr} comparingIndices={comparingIndices} confirmedIndices={confirmedIndices} />
+        <MergeSortVisualArray 
+          arrs={arrs}
+        />
 				<div className='random'>
 					Random array of length
 					<input type="text" value={randomLength} onChange={handleRandomLengthChange} />
