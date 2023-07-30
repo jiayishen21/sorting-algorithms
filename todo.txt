@@ -1,0 +1,3 @@
+- Maybe add color to merge sort
+- Quick Sort
+- Random quick sort

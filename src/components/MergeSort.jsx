@@ -7,7 +7,7 @@ export const MergeSort = () => {
 	const [arrs, setArrs] = useState([1, 2, 3, 4])
 	const [randomLength, setRandomLength] = useState("10")
 	const [custom, setCustom] = useState("4, 3, 2, 1")
-	const [speed, setSpeed] = useState(1);
+	const [speed, setSpeed] = useState(3);
 	const [waitTime, setWaitTime] = useState(baseWaitTime)
 
 	const flattenArray = (arr) => {
@@ -120,6 +120,9 @@ export const MergeSort = () => {
     setTimer(0)
     setCurPath([])
     setMerging(false)
+		setComparingIndices([])
+		setConfirmedIndices([])
+		setPushNew(0)
 		const newArrs = flattenArray(arrs)
 		setArrs(newArrs)
 	}
@@ -131,11 +134,18 @@ export const MergeSort = () => {
 			setSorting(true)
       setCurPath([])
       setMerging(false)
+			setComparingIndices([])
+			setConfirmedIndices([])
+			setPushNew(0)
 		}
 	}
 
   const [curPath, setCurPath] = useState([])
   const [merging, setMerging] = useState(false)
+	const [pushNew, setPushNew] = useState(0)
+	const [comparingIndices, setComparingIndices] = useState([]);
+	const [confirmedIndices, setConfirmedIndices] = useState([]);
+	const [stall, setStall] = useState(false)
 
 	useEffect(() => {
 		(async() => {
@@ -145,6 +155,14 @@ export const MergeSort = () => {
 			}
 			if(timer > 0) {
 				decreaseTimer()
+				return
+			}
+
+			if(stall) {
+				setTimer(waitTime)
+				setComparingIndices([])
+				setConfirmedIndices([])
+				setStall(false)
 				return
 			}
 
@@ -166,6 +184,7 @@ export const MergeSort = () => {
 				}
 
 				if(curArr[1] && curArr[1].length === 0) {
+					setStall(true)
 					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[2])
 					curArr.splice(0)
@@ -193,6 +212,7 @@ export const MergeSort = () => {
 					return
 				}
 				else if(curArr[2] && curArr[2].length === 0) {
+					setStall(true)
 					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[1])
 					curArr.splice(0)
@@ -221,16 +241,42 @@ export const MergeSort = () => {
 				}
 
 				else {
+					let unnestedIndex = 0
+					let lengthCounter = arrs
+
+					for(let i of curPath) {
+						if(i === 1) {
+							unnestedIndex += lengthCounter[0].length
+						}
+						lengthCounter = lengthCounter[i]
+					}
+
+					if(pushNew) {
+						setComparingIndices([])
+						curArr[0].push(curArr[pushNew].shift())
+						const newConfirmedIndices = [...confirmedIndices]
+						newConfirmedIndices.push(unnestedIndex + curArr[0].length - 1)
+						setConfirmedIndices(newConfirmedIndices)
+						setPushNew(0)
+						setArrs(newArrs)
+						return
+					}
+
+					unnestedIndex += lengthCounter[0].length
+					// Set comparingIndices(left, right)
+					setComparingIndices([unnestedIndex, unnestedIndex + lengthCounter[1].length])
+
 					if(curArr[1][0] < curArr[2][0]) {
 						setCodePosition(3)
-						curArr[0].push(curArr[1].shift())
+						setPushNew(1)
+						return
 					}
 					else {
 						setCodePosition(4)
-						curArr[0].push(curArr[2].shift())
+						setPushNew(2)
+						return
 					}
 				}
-				setArrs(newArrs)
 				return
       }
 
@@ -289,6 +335,8 @@ export const MergeSort = () => {
 			<div className='page'>
         <MergeSortVisualArray 
           arrs={arrs}
+					comparingIndices={comparingIndices}
+					confirmedIndices={confirmedIndices}
         />
 				<div className='random'>
 					Random array of length

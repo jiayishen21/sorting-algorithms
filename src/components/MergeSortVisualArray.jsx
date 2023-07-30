@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { Bar } from "./Bar"
 import { Fragment } from "react";
 
 // TODO: Add in comparingIndices, and perhaps a highlight for the merging arrays
-export const MergeSortVisualArray = ({arrs,}) => {
-
+export const MergeSortVisualArray = ({arrs, comparingIndices, confirmedIndices}) => {
   const findMaxNumberIn2DArray = (arr2d) => {
     if (!Array.isArray(arr2d) || arr2d.length === 0) {
       return null; // Return null if the input is not a valid 2D array
@@ -50,12 +50,45 @@ export const MergeSortVisualArray = ({arrs,}) => {
     return length + 0.5*flattened.length
   }
 
-  const flattened = flattenNestedArray(arrs)
-	const max = findMaxNumberIn2DArray(flattened)
-  const length = getTotalLength(flattened)
+  const [flattened, setFlattened] = useState([])
+  useEffect(() => {
+    setFlattened(flattenNestedArray(arrs))
+  }, [arrs])
 
-  // Set spaceWidth to half a bar
-	const spaceWidth = 20/length
+  const [max, setMax] = useState(10)
+  const [length, setLength] = useState(10)
+  useEffect(() => {
+    setMax(findMaxNumberIn2DArray(flattened))
+    setLength(getTotalLength(flattened))
+  }, [flattened])
+
+  const [spaceWidth, setSpaceWidth] = useState(2)
+  useEffect(() => {
+    // Set spaceWidth to half a bar
+    setSpaceWidth(20/length)
+  }, [length])
+
+  const [flattendComparingIndices, setFlattenedComparingIndices] = useState([])
+  const [flattenedConfirmedIndices, setFlattenedConfirmedIndices] = useState([])
+
+  useEffect(() => {
+    let counter = 0
+    const newComparing = []
+    const newConfirmed = []
+    for(let i in flattened) {
+      for(let j in flattened[i]) {
+        if(comparingIndices.includes(counter)) {
+          newComparing.push(`${i}-${j}`)
+        }
+        if(confirmedIndices.includes(counter)) {
+          newConfirmed.push(`${i}-${j}`)
+        }
+        counter ++
+      }
+    }
+    setFlattenedComparingIndices(newComparing)
+    setFlattenedConfirmedIndices(newConfirmed)
+  }, [flattened, comparingIndices, confirmedIndices])
 
 	return (
 		<>
@@ -69,13 +102,13 @@ export const MergeSortVisualArray = ({arrs,}) => {
                 height: '1px'
               }}></div> 
             }
-            {arr.map((number, index) => (
+            {arr.map((number, j) => (
               <Bar
-                key={`bar${i}-${index}`}
+                key={`bar${i}-${j}`}
                 number={number}
                 max={max}
-                highlight={false}
-                confirmed={false}
+                highlight={flattendComparingIndices.includes(`${i}-${j}`)}
+                confirmed={flattenedConfirmedIndices.includes(`${i}-${j}`)}
                 length={length + 0.5}
               />
             ))}
