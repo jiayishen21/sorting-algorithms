@@ -166,6 +166,7 @@ export const MergeSort = () => {
 				}
 
 				if(curArr[1] && curArr[1].length === 0) {
+					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[2])
 					curArr.splice(0)
 					curArr.push(...combined)
@@ -192,6 +193,7 @@ export const MergeSort = () => {
 					return
 				}
 				else if(curArr[2] && curArr[2].length === 0) {
+					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[1])
 					curArr.splice(0)
 					curArr.push(...combined)
@@ -220,9 +222,11 @@ export const MergeSort = () => {
 
 				else {
 					if(curArr[1][0] < curArr[2][0]) {
+						setCodePosition(3)
 						curArr[0].push(curArr[1].shift())
 					}
 					else {
+						setCodePosition(4)
 						curArr[0].push(curArr[2].shift())
 					}
 				}
@@ -232,6 +236,7 @@ export const MergeSort = () => {
 
       if(curArr.length <= 1) {
         setTimer(waitTime)
+				setCodePosition(1)
 
         // If currently at right array
         if(curPath[-1]) {
@@ -253,6 +258,8 @@ export const MergeSort = () => {
 			// If current array is larger than length 1, split
 			else {
 				setTimer(waitTime)
+				setCodePosition(2)
+
 				const middle = Math.ceil(curArr.length / 2)
 				const leftHalf = curArr.slice(0, middle);
  				const rightHalf = curArr.slice(middle);
@@ -271,6 +278,7 @@ export const MergeSort = () => {
 				const newCurPath = curPath
 				newCurPath.push(0)
 				setCurPath(newCurPath)
+				return
 			}
 
 		}) ()
@@ -314,7 +322,7 @@ export const MergeSort = () => {
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
 						&nbsp;&nbsp;{`if(arr.length <= 1) {`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`return arr`}	<br/>
-						&nbsp;&nbsp;{`if(arr.length <= 1) {`}	<br/>
+						&nbsp;&nbsp;{`}`}	<br/>
 					</div>
 					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
