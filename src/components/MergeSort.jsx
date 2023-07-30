@@ -189,6 +189,7 @@ export const MergeSort = () => {
 						setMerging(false)
 					}
 					setCurPath(newPath)
+					return
 				}
 				else if(curArr[2] && curArr[2].length === 0) {
 					const combined = curArr[0].concat(curArr[1])
@@ -231,7 +232,6 @@ export const MergeSort = () => {
 
       if(curArr.length <= 1) {
         setTimer(waitTime)
-        // setCodePosition(1)
 
         // If currently at right array
         if(curPath[-1]) {
@@ -253,7 +253,7 @@ export const MergeSort = () => {
 			// If current array is larger than length 1, split
 			else {
 				setTimer(waitTime)
-				const middle = Math.floor(curArr.length / 2)
+				const middle = Math.ceil(curArr.length / 2)
 				const leftHalf = curArr.slice(0, middle);
  				const rightHalf = curArr.slice(middle);
 
