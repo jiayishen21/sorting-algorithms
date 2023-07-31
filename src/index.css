@@ -146,17 +146,6 @@ nav a {
   font-size: 3rem;
 }
 
-/*
-.wheel0, .wheel4 {
-  opacity: 0;
-  font-size: 0rem;
-}
-
-.wheel2 {
-  font-size: 3rem;
-}
-*/
-
 .home a {
   color: black;
 }
@@ -300,4 +289,95 @@ nav a {
 
 .highlighted-code {
   background: lightblue;
+}
+
+@media (max-width: 600px) { 
+  body {
+    padding-right: 0;
+  }
+
+  nav a {
+    font-size: 0.9rem;
+    margin-left: 0.6rem;
+  }
+
+  nav .centering {
+    max-width: 550px;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 1rem;
+  }
+
+  .wheel {
+    width: 19rem;
+  }
+
+  .wheel-element {
+    font-size: 1.5rem;
+    margin: 0.2rem;
+  }
+
+  .wheel0, .wheel4 {
+    opacity: 0;
+    font-size: 0rem;
+  }
+
+  .wheel2 {
+    font-size: 2rem;
+  }
+
+  .sorts {
+    height: 12rem;
+  }
+
+  .bar {
+    margin: 2px;
+  }
+
+  .bar-wrapper div {
+    font-size: 0.7rem;
+  }
+
+  .custom input {
+    width: 12rem;
+  }
+
+  .slider input {
+    width: 12rem;
+  }
+
+  .page code {
+    margin-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: calc(100% - 6rem);
+    border-radius: 4px;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding-right: 0;
+  }
+
+  nav a {
+    font-size: 1.2rem;
+    margin-left: 0.7rem;
+  }
+
+  nav .centering {
+    max-width: 550px;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 1rem;
+  }
+
+  .page code {
+    font-size: 0.9rem;
+  }
 }

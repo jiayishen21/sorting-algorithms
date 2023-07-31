@@ -256,7 +256,7 @@ export const InsertionSort = () => {
 					</div>
 					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`while(j >= 0 && arr[j] > currentElement)`}	<br/>
+						&nbsp;&nbsp;{`while(j >= 0 && arr[j] > currentElement) {`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j + 1] = arr[j]`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`j --`}	<br/>
 						&nbsp;&nbsp;{`}`}	<br/>
