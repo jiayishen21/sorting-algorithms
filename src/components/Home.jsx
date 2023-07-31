@@ -4,9 +4,6 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-	const isProduction = process.env.NODE_ENV === 'production'
-	const baseURL = isProduction ? '/sorting-alogrithms' : ''
-
 	const [sorts, setSorts] = useState(['Quick Sort', 'Random Quick Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort', ])
 	const [activeSorts, setActiveSorts] = useState(['Quick', 'Random Quick Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort'])
 
@@ -74,7 +71,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		if(redirect) {
-			const targetPage = `${baseURL}/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`
+			const targetPage = `/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`
 			navigate(targetPage)
 		}
 	})
@@ -99,7 +96,7 @@ export const Home = () => {
 					</button>
 				</div>
 
-				<Link to={`${baseURL}/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`} className='select'>
+				<Link to={`/${activeSorts[2].toLowerCase().replace(/\s/g, '-')}`} className='select'>
 					<FontAwesomeIcon icon={faArrowRight} />
 				</Link>
 			</div>
