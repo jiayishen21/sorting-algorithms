@@ -7,6 +7,7 @@ Visual Sorting Algorithms is a web application that helps people see when and wh
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
+- [Screenshots](#screenshots)
 - [Acknowledgments](#acknowledgments)
 - [Contact](#contact)
 
