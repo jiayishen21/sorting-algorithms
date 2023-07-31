@@ -7,6 +7,8 @@ export const Nav = () => {
 	return (
 		<>
 			<nav className="nav">
+				{baseURL}lol
+
 				<div className="centering">
 					<div>
 						<NavLink className='home-link' to='/'>MENU</NavLink>
