@@ -7,6 +7,7 @@ import { SelectionSort } from './components/SelectionSort';
 import { InsertionSort } from './components/InsertionSort';
 import { MergeSort } from './components/MergeSort';
 import { QuickSort } from './components/QuickSort';
+import { RandomQuickSort } from './components/RandomQuickSort';
 import { Nav } from './components/Nav';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path='/insertion-sort' element={<InsertionSort />} />
           <Route path='/merge-sort' element={<MergeSort />} />
           <Route path='/quick-sort' element={<QuickSort />} />
+          <Route path='/random-quick-sort' element={<RandomQuickSort />} />
           <Route path='/' element={<Home />} />
         </Routes>
       </Router>
