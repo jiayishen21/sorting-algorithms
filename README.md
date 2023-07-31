@@ -1,6 +1,8 @@
 # Visual Sorting Algorithms
 
-Visual Sorting Algorithms is a web application that helps people see when and where elements are swapped, compared, and etc. when an array undergoes various types of sorting algorithms. In addition to showing a visualization of the array being sorted, the javascript code for each the sorting algorithm being used is also highlighted where code is being executed.
+Visual Sorting Algorithms is a web application that helps people see when and where elements are swapped, compared, and etc. when an array undergoes various types of sorting algorithms. In addition to showing a visualization of the array being sorted, the javascript code for each the sorting algorithm being used is also highlighted where code is being executed. 
+
+https://jiayishen21.github.io/sorting-algorithms/
 
 ## Table of contents
 
