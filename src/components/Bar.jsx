@@ -1,6 +1,14 @@
-
-
-export const Bar = ({number, max, length, highlight, confirmed, currentElement}) => {
+export const Bar = ({
+	number,
+	max,
+	length,
+	highlight,
+	confirmed,
+	currentElement,
+	pivot,
+	smaller,
+	bigger,
+}) => {
 	const height = 20*number/max
 	const width = 40/length
 
@@ -11,7 +19,10 @@ export const Bar = ({number, max, length, highlight, confirmed, currentElement})
 					className={
 						`bar ${highlight ? 'highlight' :
 						confirmed ? 'confirmed' :
-						currentElement ? 'currentElement' : ''}`}
+						currentElement || pivot ? 'currentElement' :
+						smaller ? 'smaller' :
+						bigger ? 'bigger' : ''
+					}`}
 					style={{
 						height: `${height}rem`,
 						width: `${width}rem`,
@@ -20,7 +31,10 @@ export const Bar = ({number, max, length, highlight, confirmed, currentElement})
 				</span>
 
 				<div>
-					{currentElement ? `Selected: ${number}`: number}
+					{
+						currentElement ? `Selected: ${number}`:
+						pivot ? `Pivot : ${number}`:
+						number}
 				</div>
 			</div>
 		</>

@@ -275,6 +275,14 @@ nav a {
   background-color: yellow;
 }
 
+.smaller {
+  background-color: orange;
+}
+
+.bigger {
+  background-color: teal;
+}
+
 .page code {
   margin-top: 2rem;
   background: #f7f7f7;
