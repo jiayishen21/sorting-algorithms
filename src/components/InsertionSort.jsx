@@ -249,14 +249,14 @@ export const InsertionSort = () => {
 				</div>
 
 				<code>
-					{`for (let i = 0; i < arr.length; i++) {`} <br/>
+					{`for(let i = 0; i < arr.length; i++) {`} <br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
 						&nbsp;&nbsp;{`let currentElement = arr[i]`}	<br/>
 						&nbsp;&nbsp;{`let j = i - 1`}	<br/>
 					</div>
 					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`while (j >= 0 && arr[j] > currentElement)`}	<br/>
+						&nbsp;&nbsp;{`while(j >= 0 && arr[j] > currentElement)`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j + 1] = arr[j]`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`j --`}	<br/>
 						&nbsp;&nbsp;{`}`}	<br/>

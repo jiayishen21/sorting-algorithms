@@ -250,10 +250,10 @@ export const SelectionSort = () => {
 				</div>
 
 				<code>
-					{`for (let i = 0; i < arr.length - 1; i++) {`} <br/>
+					{`for(let i = 0; i < arr.length - 1; i++) {`} <br/>
 					&nbsp;&nbsp;{`let minIndex = i`}	<br/>
 					<br/>
-					&nbsp;&nbsp;{`for (let j = i + 1; j < arr.length; j++) {`}	<br/>
+					&nbsp;&nbsp;{`for(let j = i + 1; j < arr.length; j++) {`}	<br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
 						&nbsp;&nbsp;&nbsp;&nbsp;{`if (arr[j] < arr[minIndex]) {`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`minIndex = j`}	<br/>
@@ -261,7 +261,7 @@ export const SelectionSort = () => {
 					</div>
 					<br />
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`if (minIndex !== i) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if(minIndex !== i) {`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`let temp = arr[i]`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[i] = arr[minIndex]`}	<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[minIndex] = temp`}	<br/>

@@ -270,32 +270,34 @@ export const QuickSort = () => {
 				</div>
 
 				<code>
+          {`const quickSort = (arr) => {`} <br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-            {`if (arr.length <= 1) {`} <br/>
-            &nbsp;&nbsp;{`return arr`}	<br/>
-            {`}`} <br/>
+            &nbsp;&nbsp;{`if(arr.length <= 1) {`} <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`return arr`}	<br/>
+            &nbsp;&nbsp;{`}`} <br/>
 					</div>
 					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-            {`const pivot = arr[0]`}	<br/>
+            &nbsp;&nbsp;{`const pivot = arr[0]`}	<br/>
 					</div>
-          {`const left = []`}	<br/>
-          {`const right = []`}	<br/>
+          &nbsp;&nbsp;{`const left = []`}	<br/>
+          &nbsp;&nbsp;{`const right = []`}	<br/>
           <br />
 					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-            {`for (let i = 1; i < arr.length; i++) {`}	<br/>
-            &nbsp;&nbsp;{`if (arr[i] < pivot) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`left.push(arr[i])`}	<br/>
+            {`for(let i = 1; i < arr.length; i++) {`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`if (arr[i] < pivot) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`left.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`else {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`right.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
             &nbsp;&nbsp;{`}`}	<br/>
-            &nbsp;&nbsp;{`else {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`right.push(arr[i])`}	<br/>
-            &nbsp;&nbsp;{`}`}	<br/>
-            {`}`}	<br/>
 					</div>
           <br />
 					<div className={codePosition === 4 ? 'highlighted-code' : ''}>
-            {`return [...quickSort(left), pivot, ...quickSort(right)]`}
+            &nbsp;&nbsp;{`return [...quickSort(left), pivot, ...quickSort(right)]`} <br />
           </div>
+          {`}`}
 				</code>
 
 			</div>

@@ -294,35 +294,37 @@ export const RandomQuickSort = () => {
 				</div>
 
 				<code>
+          {`const randomQuickSort = (arr) => {`} <br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-            {`if (arr.length <= 1) {`} <br/>
-            &nbsp;&nbsp;{`return arr`}	<br/>
-            {`}`} <br/>
+            &nbsp;&nbsp;{`if(arr.length <= 1) {`} <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`return arr`}	<br/>
+            &nbsp;&nbsp;{`}`} <br/>
 					</div>
 					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-            {`const pivotIndex = Math.floor(Math.random() * arr.length)`}	<br/>
-            {`const pivot = arr[pivotIndex]`}	<br/>
-            {`arr.splice(pivotIndex, 1)`}	<br/>
+            &nbsp;&nbsp;{`const pivotIndex = Math.floor(Math.random() * arr.length)`}	<br/>
+            &nbsp;&nbsp;{`const pivot = arr[pivotIndex]`}	<br/>
+            &nbsp;&nbsp;{`arr.splice(pivotIndex, 1)`}	<br/>
 					</div>
           <br />
-          {`const left = []`}	<br/>
-          {`const right = []`}	<br/>
+          &nbsp;&nbsp;{`const left = []`}	<br/>
+          &nbsp;&nbsp;{`const right = []`}	<br/>
           <br />
 					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-            {`for (let i = 0; i < arr.length; i++) {`}	<br/>
-            &nbsp;&nbsp;{`if (arr[i] < pivot) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`left.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;{`for(let i = 0; i < arr.length; i++) {`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`if (arr[i] < pivot) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`left.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`else {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`right.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
             &nbsp;&nbsp;{`}`}	<br/>
-            &nbsp;&nbsp;{`else {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`right.push(arr[i])`}	<br/>
-            &nbsp;&nbsp;{`}`}	<br/>
-            {`}`}	<br/>
 					</div>
           <br />
 					<div className={codePosition === 4 ? 'highlighted-code' : ''}>
-            {`return [...quickSort(left), pivot, ...quickSort(right)]`}
+            &nbsp;&nbsp;{`return [...randomQuickSort(left), pivot, ...randomQuickSort(right)]`} <br />
           </div>
+          {`}`}
 				</code>
 
 			</div>
