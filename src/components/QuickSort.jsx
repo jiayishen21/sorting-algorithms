@@ -144,6 +144,7 @@ export const QuickSort = () => {
 			}
       if(changeArr) {
         setTimer(waitTime)
+        setCodePosition(4)
         setChangeArr(false)
         const insertArr = []
         for(let index of smallerIndices) {
@@ -171,6 +172,7 @@ export const QuickSort = () => {
         for(let i in arr) {
           if(!confirmedIndices.includes(parseInt(i))) {
             setTimer(waitTime)
+            setCodePosition(2)
             setPivotIndex(parseInt(i))
             return
           }
@@ -182,6 +184,7 @@ export const QuickSort = () => {
       if(confirmedIndices.includes(pivotIndex + 1) ||
         pivotIndex + 1 >= arr.length) {
         setTimer(waitTime)
+        setCodePosition(1)
         const newConfirmedIndices = [...confirmedIndices]
         newConfirmedIndices.push(pivotIndex)
         setConfirmedIndices(newConfirmedIndices)
@@ -190,6 +193,7 @@ export const QuickSort = () => {
       }
       if(comparingIndex === -1) {
         setTimer(waitTime)
+        setCodePosition(3)
         setComparingIndex(pivotIndex + 1)
         return
       }
@@ -232,7 +236,7 @@ export const QuickSort = () => {
 			<div className='page'>
         <QuickSortVisualArray
           arr={arr}
-          comparingIndex={comparingIndex} 
+          comparingIndex={comparingIndex}
           confirmedIndices={confirmedIndices}
           pivotIndex={pivotIndex}
           smallerIndices={smallerIndices}
@@ -266,28 +270,32 @@ export const QuickSort = () => {
 				</div>
 
 				<code>
-					{`for(let i = 0; i < arr.length - 1; i ++) {`} <br/>
-					&nbsp;&nbsp;{`let sorted = true`}	<br/>
-					<br/>
-					&nbsp;&nbsp;{`for(let j = 0; j < arr.length - 1 - i; j ++) {`}	<br/>
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`if(arr[j] > arr[j + 1]) {`}	<br/>
+            {`if (arr.length <= 1) {`} <br/>
+            &nbsp;&nbsp;{`return arr`}	<br/>
+            {`}`} <br/>
 					</div>
+					<br/>
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`sorted = false`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`const temp = arr[j]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j] = arr[j + 1]`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`arr[j + 1] = temp`}	<br/>
+            {`const pivot = arr[0]`}	<br/>
 					</div>
-					&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
-					&nbsp;&nbsp;{`}`}	<br/>
-					{`	`}	<br/>
+          {`const left = []`}	<br/>
+          {`const right = []`}	<br/>
+          <br />
 					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`if(sorted) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`break`}	<br/>
-						&nbsp;&nbsp;{`}`}	<br/>
+            {`for (let i = 1; i < arr.length; i++) {`}	<br/>
+            &nbsp;&nbsp;{`if (arr[i] < pivot) {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`left.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;{`}`}	<br/>
+            &nbsp;&nbsp;{`else {`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`right.push(arr[i])`}	<br/>
+            &nbsp;&nbsp;{`}`}	<br/>
+            {`}`}	<br/>
 					</div>
-					{`}`}
+          <br />
+					<div className={codePosition === 4 ? 'highlighted-code' : ''}>
+            {`return [...quickSort(left), pivot, ...quickSort(right)]`}
+          </div>
 				</code>
 
 			</div>
