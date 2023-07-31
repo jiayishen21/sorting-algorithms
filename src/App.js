@@ -22,7 +22,7 @@ function App() {
           <Route path='/merge-sort' element={<MergeSort />} />
           <Route path='/quick-sort' element={<QuickSort />} />
           <Route path='/random-quick-sort' element={<RandomQuickSort />} />
-          <Route path='/' element={<Home />} />
+          <Route path='/*' element={<Home />} />
         </Routes>
       </Router>
       <ToastContainer />
