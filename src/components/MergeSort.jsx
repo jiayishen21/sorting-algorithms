@@ -12,7 +12,7 @@ export const MergeSort = () => {
 
 	const flattenArray = (arr) => {
 		let flattenedArray = [];
-	
+
 		arr.forEach((element) => {
 			if (Array.isArray(element)) {
 				flattenedArray.push(...flattenArray(element));
@@ -20,7 +20,7 @@ export const MergeSort = () => {
 				flattenedArray.push(element);
 			}
 		});
-	
+
 		return flattenedArray;
 	}
 
@@ -34,24 +34,24 @@ export const MergeSort = () => {
 	}
 
 	const handleRandomLengthChange = (event) => {
-		if(event.target.value.length < 3 &&
-      event.target.value[1] !== '.' &&
-      event.target.value[0] !== '-') {
+		if (event.target.value.length < 3 &&
+			event.target.value[1] !== '.' &&
+			event.target.value[0] !== '-') {
 			setRandomLength(event.target.value)
 		}
-  }
+	}
 
 	const handleCustomChange = (event) => {
 		setCustom(event.target.value)
-  }
+	}
 
-	const onClickGenerate = async() => {
+	const onClickGenerate = async () => {
 		const number = parseInt(randomLength)
-		if(isNaN(number) || number < 3) {
+		if (isNaN(number) || number < 3) {
 			toast.error('Length must be at least 3.')
 			return
 		}
-		if(number > 25) {
+		if (number > 25) {
 			toast.error('Length must be 25 or lower.')
 			return
 		}
@@ -60,22 +60,22 @@ export const MergeSort = () => {
 		setArrs(randomArray(number))
 	}
 
-	const onClickCustom = async() => {
-		const values = custom.split(",").map((item) => item.trim());	
+	const onClickCustom = async () => {
+		const values = custom.split(",").map((item) => item.trim());
 		const newCustom = values.map((value) => Number(value));
-		if(!newCustom.every((value) => Number.isInteger(value))) {
+		if (!newCustom.every((value) => Number.isInteger(value))) {
 			toast.error('Invalid input array. Must only input positive integers for display purposes.')
 			return
 		}
-		if(!newCustom.every((value) => value > 0)) {
+		if (!newCustom.every((value) => value > 0)) {
 			toast.error('Invalid input array. Must only input positive integers for display purposes.')
 			return
 		}
-		if(newCustom.length < 3) {
+		if (newCustom.length < 3) {
 			toast.error('Length must be at least 3.')
 			return
 		}
-		if(newCustom.length > 25) {
+		if (newCustom.length > 25) {
 			toast.error('Length must be 25 or lower.')
 			return
 		}
@@ -94,11 +94,11 @@ export const MergeSort = () => {
 	}, [])
 
 	useEffect(() => {
-		setWaitTime(baseWaitTime/speed)
+		setWaitTime(baseWaitTime / speed)
 	}, [speed])
 
-	const decreaseTimer = async() => {
-		if(timer > 0) {
+	const decreaseTimer = async () => {
+		if (timer > 0) {
 			await delay(10)
 			setTimer(timer - 10)
 		}
@@ -117,9 +117,9 @@ export const MergeSort = () => {
 		setSorting(false)
 		await delay(50)
 		setCodePosition(0)
-    setTimer(0)
-    setCurPath([])
-    setMerging(false)
+		setTimer(0)
+		setCurPath([])
+		setMerging(false)
 		setComparingIndices([])
 		setConfirmedIndices([])
 		setPushNew(0)
@@ -128,37 +128,37 @@ export const MergeSort = () => {
 	}
 
 	const onClickSort = () => {
-		if(!sorting) {
-      setTimer(0)
+		if (!sorting) {
+			setTimer(0)
 			setCodePosition(0)
 			setSorting(true)
-      setCurPath([])
-      setMerging(false)
+			setCurPath([])
+			setMerging(false)
 			setComparingIndices([])
 			setConfirmedIndices([])
 			setPushNew(0)
 		}
 	}
 
-  const [curPath, setCurPath] = useState([])
-  const [merging, setMerging] = useState(false)
+	const [curPath, setCurPath] = useState([])
+	const [merging, setMerging] = useState(false)
 	const [pushNew, setPushNew] = useState(0)
 	const [comparingIndices, setComparingIndices] = useState([]);
 	const [confirmedIndices, setConfirmedIndices] = useState([]);
 	const [stall, setStall] = useState(false)
 
 	useEffect(() => {
-		(async() => {
-			if(!sorting) {
+		(async () => {
+			if (!sorting) {
 				setTimer(0)
 				return
 			}
-			if(timer > 0) {
+			if (timer > 0) {
 				decreaseTimer()
 				return
 			}
 
-			if(stall) {
+			if (stall) {
 				setTimer(waitTime)
 				setComparingIndices([])
 				setConfirmedIndices([])
@@ -166,24 +166,24 @@ export const MergeSort = () => {
 				return
 			}
 
-      let curArr = arrs
-      for(let i of curPath) {
-        curArr = curArr[i]
-      }
+			let curArr = arrs
+			for (let i of curPath) {
+				curArr = curArr[i]
+			}
 
-      if(merging) {
+			if (merging) {
 				setTimer(waitTime)
 				const newArrs = [...arrs]
 				curArr = newArrs
-				for(let i of curPath) {
+				for (let i of curPath) {
 					curArr = curArr[i]
 				}
 
-				if(curArr.length < 3) {
+				if (curArr.length < 3) {
 					curArr.unshift([])
 				}
 
-				if(curArr[1] && curArr[1].length === 0) {
+				if (curArr[1] && curArr[1].length === 0) {
 					setStall(true)
 					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[2])
@@ -192,7 +192,7 @@ export const MergeSort = () => {
 
 					const newPath = [...curPath]
 
-					if(curPath.length === 0) {
+					if (curPath.length === 0) {
 						setArrs(newArrs)
 						await onStop();
 						toast.success('Array sorted.')
@@ -200,7 +200,7 @@ export const MergeSort = () => {
 					}
 
 					// If currently on right path
-					if(newPath[newPath.length - 1]) {
+					if (newPath[newPath.length - 1]) {
 						newPath.pop()
 					}
 					// If on left path, move to right path
@@ -211,7 +211,7 @@ export const MergeSort = () => {
 					setCurPath(newPath)
 					return
 				}
-				else if(curArr[2] && curArr[2].length === 0) {
+				else if (curArr[2] && curArr[2].length === 0) {
 					setStall(true)
 					setCodePosition(5)
 					const combined = curArr[0].concat(curArr[1])
@@ -220,7 +220,7 @@ export const MergeSort = () => {
 
 					const newPath = [...curPath]
 
-					if(curPath.length === 0) {
+					if (curPath.length === 0) {
 						setArrs(newArrs)
 						await onStop();
 						toast.success('Array sorted.')
@@ -228,7 +228,7 @@ export const MergeSort = () => {
 					}
 
 					// If currently on right path	
-					if(newPath[newPath.length - 1]) {
+					if (newPath[newPath.length - 1]) {
 						newPath.pop()
 					}
 					// If on left path, move to right path
@@ -244,14 +244,14 @@ export const MergeSort = () => {
 					let unnestedIndex = 0
 					let lengthCounter = arrs
 
-					for(let i of curPath) {
-						if(i === 1) {
+					for (let i of curPath) {
+						if (i === 1) {
 							unnestedIndex += lengthCounter[0].length
 						}
 						lengthCounter = lengthCounter[i]
 					}
 
-					if(pushNew) {
+					if (pushNew) {
 						setComparingIndices([])
 						curArr[0].push(curArr[pushNew].shift())
 						const newConfirmedIndices = [...confirmedIndices]
@@ -266,7 +266,7 @@ export const MergeSort = () => {
 					// Set comparingIndices(left, right)
 					setComparingIndices([unnestedIndex, unnestedIndex + lengthCounter[1].length])
 
-					if(curArr[1][0] < curArr[2][0]) {
+					if (curArr[1][0] < curArr[2][0]) {
 						setCodePosition(3)
 						setPushNew(1)
 						return
@@ -278,29 +278,29 @@ export const MergeSort = () => {
 					}
 				}
 				return
-      }
+			}
 
-      if(curArr.length <= 1) {
-        setTimer(waitTime)
+			if (curArr.length <= 1) {
+				setTimer(waitTime)
 				setCodePosition(1)
 
-        // If currently at right array
-        if(curPath[-1]) {
+				// If currently at right array
+				if (curPath[-1]) {
 					// Merge
-          const newCurPath = [...curPath]
-          newCurPath.pop()
-          setCurPath(newCurPath)
-          setMerging(true)
-        }
-        // If currentl at left array
-        else {
+					const newCurPath = [...curPath]
+					newCurPath.pop()
+					setCurPath(newCurPath)
+					setMerging(true)
+				}
+				// If currentl at left array
+				else {
 					// Move into the right array
-          const newCurPath = [...curPath]
-          newCurPath[-1] = 1
-          setCurPath(newCurPath)
-        }
-        return
-      }
+					const newCurPath = [...curPath]
+					newCurPath[-1] = 1
+					setCurPath(newCurPath)
+				}
+				return
+			}
 			// If current array is larger than length 1, split
 			else {
 				setTimer(waitTime)
@@ -308,12 +308,12 @@ export const MergeSort = () => {
 
 				const middle = Math.ceil(curArr.length / 2)
 				const leftHalf = curArr.slice(0, middle);
- 				const rightHalf = curArr.slice(middle);
+				const rightHalf = curArr.slice(middle);
 
 				// Update arrs
 				const newArrs = [...arrs]
 				let newCurArr = newArrs
-				for(let i of curPath) {
+				for (let i of curPath) {
 					newCurArr = newCurArr[i]
 				}
 				newCurArr.splice(0)
@@ -327,17 +327,17 @@ export const MergeSort = () => {
 				return
 			}
 
-		}) ()
+		})()
 	}, [sorting, timer])
 
 	return (
 		<>
 			<div className='page'>
-        <MergeSortVisualArray 
-          arrs={arrs}
+				<MergeSortVisualArray
+					arrs={arrs}
 					comparingIndices={comparingIndices}
 					confirmedIndices={confirmedIndices}
-        />
+				/>
 				<div className='random'>
 					Random array of length
 					<input type="text" value={randomLength} onChange={handleRandomLengthChange} />
@@ -366,51 +366,51 @@ export const MergeSort = () => {
 				</div>
 
 				<code>
-					{`const mergeSort = (arr) => {`} <br/>
+					{`const mergeSort = (arr) => {`} <br />
 					<div className={codePosition === 1 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`if(arr.length <= 1) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`return arr`}	<br/>
-						&nbsp;&nbsp;{`}`}	<br/>
+						&nbsp;&nbsp;{`if(arr.length <= 1) {`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{`return arr`}	<br />
+						&nbsp;&nbsp;{`}`}	<br />
 					</div>
-					<br/>
+					<br />
 					<div className={codePosition === 2 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`const middle = Math.floor(arr.length / 2)`}	<br/>
-						&nbsp;&nbsp;{`const leftHalf = arr.slice(0, middle)`}	<br/>
-						&nbsp;&nbsp;{`const rightHalf = arr.slice(middle)`}	<br/>
+						&nbsp;&nbsp;{`const middle = Math.floor(arr.length / 2)`}	<br />
+						&nbsp;&nbsp;{`const leftHalf = arr.slice(0, middle)`}	<br />
+						&nbsp;&nbsp;{`const rightHalf = arr.slice(middle)`}	<br />
 						<br />
-						&nbsp;&nbsp;{`const sortedLeft = mergeSort(leftHalf)`}	<br/>
-						&nbsp;&nbsp;{`const sortedRight = mergeSort(rightHalf)`}	<br/>
+						&nbsp;&nbsp;{`const sortedLeft = mergeSort(leftHalf)`}	<br />
+						&nbsp;&nbsp;{`const sortedRight = mergeSort(rightHalf)`}	<br />
 						<br />
-						&nbsp;&nbsp;{`return merge(sortedLeft, sortedRight)`}	<br/>
+						&nbsp;&nbsp;{`return merge(sortedLeft, sortedRight)`}	<br />
 					</div>
 					{`}`} <br />
 					<br />
-					{`const merge = (arr) => {`} <br/>
-					&nbsp;&nbsp;{`let combined = []`}	<br/>
-					&nbsp;&nbsp;{`let leftIndex = 0`}	<br/>
-					&nbsp;&nbsp;{`let rightIndex = 0`}	<br/>
+					{`const merge = (left, right) => {`} <br />
+					&nbsp;&nbsp;{`let combined = []`}	<br />
+					&nbsp;&nbsp;{`let leftIndex = 0`}	<br />
+					&nbsp;&nbsp;{`let rightIndex = 0`}	<br />
 					<br />
-					&nbsp;&nbsp;{`while(leftIndex < left.length && rightIndex < right.length) {`}	<br/>
+					&nbsp;&nbsp;{`while(leftIndex < left.length && rightIndex < right.length) {`}	<br />
 					<div className={codePosition === 3 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`if(left[leftIndex] < right[rightIndex]) {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`combined.push(left[leftIndex])`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`leftIndex++`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`if(left[leftIndex] < right[rightIndex]) {`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`combined.push(left[leftIndex])`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`leftIndex++`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br />
 					</div>
 					<br />
 					<div className={codePosition === 4 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`else {`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`combined.push(right[rightIndex])`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`rightIndex++`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;{`else {`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`combined.push(right[rightIndex])`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`rightIndex++`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{`}`}	<br />
 					</div>
-					&nbsp;&nbsp;{`}`}	<br/>
+					&nbsp;&nbsp;{`}`}	<br />
 					<br />
 					<div className={codePosition === 5 ? 'highlighted-code' : ''}>
-						&nbsp;&nbsp;{`return combined`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`.concat(left.slice(leftIndex))`}	<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;{`.concat(right.slice(rightIndex))`}	<br/>
-						</div>
+						&nbsp;&nbsp;{`return combined`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{`.concat(left.slice(leftIndex))`}	<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{`.concat(right.slice(rightIndex))`}	<br />
+					</div>
 					{`}`}
 				</code>
 
